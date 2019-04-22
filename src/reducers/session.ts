@@ -1,3 +1,4 @@
+import { Reducer } from 'redux';
 import {
   LOGIN,
   LOGIN_FAIL,
@@ -15,10 +16,10 @@ export const initialState: sessionState = {
   errorMsg: '',
 }
 
-export const session = (
+export const session: Reducer<sessionState, loginAction | logoutAction> = (
   state = initialState,
-  action: loginAction | logoutAction
-): sessionState => {
+  action
+) => {
   switch(action.type){
     case LOGIN: 
       return { ...state, username: action.payload, errorMsg: '' }
@@ -28,6 +29,6 @@ export const session = (
       return { ...state, errorMsg: action.payload.errorMsg }
     }
     default:
-      return state
+      return state;
   }
 }

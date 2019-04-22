@@ -31,7 +31,7 @@ const fakeData = [
   },
 ]
 
-export const getNews = (): Promise<INewsResponse> => {
+export const getNewsPromise = (): Promise<INewsResponse> => {
   const promise = new Promise<INewsResponse>(resolve => {
     resolve({
       status: 200,

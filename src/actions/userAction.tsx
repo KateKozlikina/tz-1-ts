@@ -1,27 +1,36 @@
+import { Dispatch } from 'redux';
+import { navigate } from "@reach/router";
 import {
   LOGIN,
   LOGIN_FAIL,
   LOGOUT,
 } from '../constants/index';
 import { IUserIdentify } from '../models/user';
-import { checkAuth } from '../utils/checkAuth';
+import { loginAction } from '../models/actions';
+import { authenticate } from '../api/Auth';
 
-export const login = (user: IUserIdentify) => {
-  return (dispatch: any) => {
-    if (checkAuth(user)) {
-      dispatch ({
+
+export const login: any = (user: IUserIdentify) => {
+  return (dispatch: Dispatch<loginAction>): any => {
+    authenticate(user)
+    .then(() => {
+      navigate('./profile');
+      return dispatch ({
         type: LOGIN,
         payload: user.username,
       })
-    } else {
-      dispatch ({
+    })
+    .catch(error =>{
+      return dispatch ({
         type: LOGIN_FAIL,
         payload: {
-          errorMsg: 'Неверный логин и/или пароль',
+          errorMsg: error.errorText,
         },
         error: true,
       })
-    }
+    })
+
+
   }
 };
 

@@ -6,7 +6,7 @@ interface IAuthResponse {
   data?: any;
   errorText?: string;
 }
-
+//ис
 const checkCredentials = (data: IUserIdentify): boolean => {
   if (data.username === 'Admin' && data.password == "12345") {
     return true;

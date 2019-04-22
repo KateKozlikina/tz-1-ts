@@ -1,30 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { RouteComponentProps } from '@reach/router';
-import { INewsItem } from '../models/news';
-import { getNews } from '../api/News';
+import React, { useEffect } from 'react';
 import { NewsItem } from './NewsItem';
+import { NewsProps } from '../containers/News';
 
-const News: React.FC<RouteComponentProps> = () => {
-
-  const [news, setNews] = useState<INewsItem[]>([]);
+const News: React.FC<NewsProps> = (props) => {
 
   useEffect(() =>{
-    getNews()
-      .then(res =>{
-        setNews(res.data)
-      })
-      .catch(err => {
-        console.warn(err);
-      })
+    props.getNews();
   });
 
   return (
     <div className="news">
-      {news.map(item =>(
+      {props.news && props.news.map(item =>(
         <NewsItem data={item} key={item.id} />
       ))}
     </div>
   )
 }
 
-export { News }
+export default News;
